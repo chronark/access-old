@@ -2,7 +2,9 @@
   "name": "@chronark/access",
   "version": "0.0.3",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module":"dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "node --loader=tsx --test ./**/*.test.ts",
     "build": "tsup"
@@ -11,7 +13,7 @@
   "author": "Andreas Thomas",
   "license": "ISC",
   "devDependencies": {
-    "tsup": "^6.3.3",
+    "tsup": "^6.2.3",
     "tsx": "^3.10.1",
     "typescript": "^4.8.4"
   },

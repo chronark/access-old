@@ -1,14 +1,14 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@chronark/access': 0.0.2
+  '@chronark/access': 0.0.3
   tsup: ^6.2.3
   tsx: ^3.10.1
   typescript: ^4.8.4
   zod: ^3.19.1
 
 dependencies:
-  '@chronark/access': 0.0.2
+  '@chronark/access': 0.0.3
   zod: 3.19.1
 
 devDependencies:
@@ -18,8 +18,8 @@ devDependencies:
 
 packages:
 
-  /@chronark/access/0.0.2:
-    resolution: {integrity: sha512-sudGhg0WuYSOVsuZzo73FRX6CmSKYb54p4kUVNEjamjB+FwN0fUKXd6MKZo6xbJWlbzKP38FD8vWNabKapj8HQ==}
+  /@chronark/access/0.0.3:
+    resolution: {integrity: sha512-FH4j8fiGfn/Rvrn1LslqoMq3WnWBUWABndCLmPUBWa6fBDNqLORXNB1g9CHumKVxuVQ+piAWqT/r/O7eNeXxPg==}
     dependencies:
       zod: 3.19.1
     dev: false
