@@ -1,6 +1,6 @@
 {
   "name": "@chronark/access",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -11,12 +11,12 @@
   "author": "Andreas Thomas",
   "license": "ISC",
   "devDependencies": {
-    "tsup": "^6.2.3",
+    "tsup": "^6.3.3",
     "tsx": "^3.10.1",
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@chronark/access": "0.0.2",
+    "@chronark/access": "0.0.3",
     "zod": "^3.19.1"
   }
 }
