@@ -6,7 +6,7 @@
 <br/>
 
 A minimal library for access control. It is designed to be used together with
-opaque access tokens. It provides a simple interface to define roles with
+opaque access tokens by providing a simple interface to define roles with
 different access permissions and verifying requests to resources.
 
 - Fully typed
