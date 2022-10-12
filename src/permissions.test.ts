@@ -34,12 +34,12 @@ describe("deserialization", () => {
   });
 });
 
-describe("verify", () => {
+describe("allow", () => {
   describe("without access", () => {
     it("denies the request", () => {
       const ac = new AccessControl<{ r: ["r", "w"] }>();
       const role = ac.newRole({ r: ["r"] });
-      const { success, error } = role.verify("r", ["r", "w"]);
+      const { success, error } = role.allow("r", ["r", "w"]);
       assert.equal(success, false);
       assert.equal(error, 'not authorized for action "w" on resource: "r"');
     });
@@ -48,7 +48,7 @@ describe("verify", () => {
     it("serializes correctly", () => {
       const ac = new AccessControl<{ r: ["r", "w"] }>();
       const role = ac.newRole({ r: ["r"] });
-      const { success, error } = role.verify("r", ["r"]);
+      const { success, error } = role.allow("r", ["r"]);
       assert.equal(success, true);
       assert.equal(error, undefined);
     });

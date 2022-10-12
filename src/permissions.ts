@@ -22,7 +22,7 @@ export class AccessControl<TStatements extends Statements> {
   }
 }
 
-export type VerifyResponse =
+export type allowResponse =
   | { success: false; error: string }
   | { success: true; error?: never };
 
@@ -33,11 +33,11 @@ export class Role<TStatements extends Statements> {
     this.statements = statements;
   }
 
-  // public verify<TResource extends keyof TStatements>(req: { resource: TResource, actions: TStatements[TResource] }): VerifyResponse {
-  public verify<TResource extends keyof TStatements>(
+  // public allow<TResource extends keyof TStatements>(req: { resource: TResource, actions: TStatements[TResource] }): allowResponse {
+  public allow<TResource extends keyof TStatements>(
     resource: TResource,
     actions: SubArray<TStatements[TResource]>,
-  ): VerifyResponse {
+  ): allowResponse {
     for (const [r, as] of Object.entries(this.statements)) {
       if (resource === r) {
         for (const action of (actions)) {
