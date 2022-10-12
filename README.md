@@ -70,10 +70,7 @@ const recovered = Role.fromString<Statements>(serialized);
  *
  * everything is fully typed
  */
-const res = recovered.verify({
-  resource: "team",
-  actions: ["read"],
-});
+const res = recovered.verify("team", ["read"]);
 
 // res.success => boolean
 // res.error => string | undefined provides a reason for failure

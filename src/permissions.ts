@@ -35,18 +35,17 @@ export class Role<TStatements extends Statements> {
 
   // public verify<TResource extends keyof TStatements>(req: { resource: TResource, actions: TStatements[TResource] }): VerifyResponse {
   public verify<TResource extends keyof TStatements>(
-    req: { resource: TResource; actions: SubArray<TStatements[TResource]> },
+    resource: TResource,
+    actions: SubArray<TStatements[TResource]>,
   ): VerifyResponse {
-    console.log({ req, statements: this.statements });
-
     for (const [r, as] of Object.entries(this.statements)) {
-      if (req.resource === r) {
-        for (const action of (req.actions as unknown as string[])) {
+      if (resource === r) {
+        for (const action of (actions)) {
           if (!as?.includes(action)) {
             return {
               success: false,
               error:
-                `not authorization for action "${action}" on resource: "${r}"`,
+                `not authorized for action "${action}" on resource: "${r}"`,
             };
           }
         }
@@ -56,7 +55,7 @@ export class Role<TStatements extends Statements> {
 
     return {
       success: false,
-      error: `not authorized for resource "${req.resource.toString()}"`,
+      error: `not authorized for resource "${resource.toString()}"`,
     };
   }
 
