@@ -1,5 +1,4 @@
-import { AccessControl, Role } from "./index"
-
+import { AccessControl, Role } from "./index";
 
 /**
  * Define all your possible access controls
@@ -8,8 +7,8 @@ import { AccessControl, Role } from "./index"
  * value => array of access types
  */
 type MyStatements = {
-    "user": ["read", "write", "dance"];
-    "team": ["read", "write"];
+  "user": ["read", "write", "dance"];
+  "team": ["read", "write"];
 };
 
 /**
@@ -21,8 +20,8 @@ const ac = new AccessControl<MyStatements>();
  * Define one or more roles
  */
 const role = ac.newRole({
-    team: ["read"],
-    user: ["read", "write"],
+  team: ["read"],
+  user: ["read", "write"],
 });
 
 /**
@@ -33,12 +32,12 @@ const recovered = Role.fromString<MyStatements>(serialized);
 
 /**
  * Validate the role by specifying the resource and the required access
- * 
+ *
  * everything is fully typed
  */
 const { success, error } = recovered.verify({
-    resource: "team",
-    actions: ["read"],
+  resource: "team",
+  actions: ["read"],
 });
 
 console.log({ success, error });

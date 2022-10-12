@@ -1,9 +1,9 @@
 {
   "name": "@chronark/access",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "dist/index.js",
-  "module":"dist/index.mjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "node --loader=tsx --test ./**/*.test.ts",
@@ -16,9 +16,4 @@
     "tsup": "^6.2.3",
     "tsx": "^3.10.1",
     "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "@chronark/access": "0.0.3",
-    "zod": "^3.19.1"
-  }
-}
+  }}
