@@ -7,15 +7,6 @@ export type Subset<K extends keyof R, R extends Record<string, unknown[]>> = {
   [P in K]: SubArray<R[P]>;
 };
 
-export type Statement = {
-  action: string;
-  // /**
-  //  * A unique resource id
-  //  * This narrows down the scope of the resource to a single entity
-  //  */
-  // rid?: string
-};
-
 export type Statements = {
-  [resource: string]: Statement[];
+  [resource: string]: string[];
 };

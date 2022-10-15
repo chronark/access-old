@@ -1,4 +1,4 @@
-import type { Statements, SubArray, Subset } from "./types";
+import type { Statements, Subset } from "./types";
 
 export class ParsingError extends Error {
   public readonly path: string;
@@ -54,7 +54,7 @@ export class Role<TStatements extends Statements> {
           // if (allowedAction.rid && allowedAction.rid !== requestedAction.rid){
           //   return false
           // }
-          return allowedAction.action === requestedAction.action;
+          return allowedAction === requestedAction;
         }
         return false;
       });
@@ -73,7 +73,7 @@ export class Role<TStatements extends Statements> {
     };
   }
 
-  static fromString<TStatements extends Statements = {}>(
+  static fromString<TStatements extends Statements = Record<never, never>>(
     s: string,
   ): Role<TStatements> {
     const statements = JSON.parse(s) as TStatements;

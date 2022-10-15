@@ -21,7 +21,7 @@ npm i @chronark/access
 
 ## Usage
 
-```typescript
+```ts
 import { AccessControl, Role } from "@chronark/access";
 
 /**
@@ -31,9 +31,9 @@ import { AccessControl, Role } from "@chronark/access";
  * value => array of access types
  */
 type Statements = {
-  "user": ["read", "write", "dance"];
-  "team": ["read", "write"];
-};
+  user: ["read", "write", "dance"];
+  team: ["read", "write"];
+;
 
 /**
  * Create an access control instance and pass the Statements type to enjoy full
