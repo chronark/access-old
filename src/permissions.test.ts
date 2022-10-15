@@ -12,9 +12,12 @@ describe("serialization", () => {
   describe("with resources", () => {
     it("serializes correctly", () => {
       const role = new Role({
-        "r1": ["a", "b"],
+        "r1": [{ action: "a" }, { action: "b" }],
       });
-      assert.strictEqual(role.toString(), '{"r1":["a","b"]}');
+      assert.strictEqual(
+        role.toString(),
+        '{"r1":[{"action":"a"},{"action":"b"}]}',
+      );
     });
   });
 });
@@ -34,21 +37,25 @@ describe("deserialization", () => {
   });
 });
 
-describe("allow", () => {
+describe("authorize", () => {
   describe("without access", () => {
     it("denies the request", () => {
-      const ac = new AccessControl<{ r: ["r", "w"] }>();
-      const role = ac.newRole({ r: ["r"] });
-      const { success, error } = role.allow("r", ["r", "w"]);
+      const ac = new AccessControl<{
+        res1: [{ action: "r" }, { action: "w" }];
+      }>();
+      const role = ac.newRole({ res1: [{ action: "r" }] });
+      const { success, error } = role.authorize({
+        "res1": [{ action: "r" }, { action: "w" }],
+      });
       assert.equal(success, false);
-      assert.equal(error, 'not authorized for action "w" on resource: "r"');
+      assert.equal(error, 'unauthorized to access resource "res1"');
     });
   });
   describe("with access", () => {
-    it("serializes correctly", () => {
-      const ac = new AccessControl<{ r: ["r", "w"] }>();
-      const role = ac.newRole({ r: ["r"] });
-      const { success, error } = role.allow("r", ["r"]);
+    it("allows the request", () => {
+      const ac = new AccessControl<{ r: [{ action: "r" }, { action: "w" }] }>();
+      const role = ac.newRole({ r: [{ action: "r" }] });
+      const { success, error } = role.authorize({ "r": [{ action: "r" }] });
       assert.equal(success, true);
       assert.equal(error, undefined);
     });

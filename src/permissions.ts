@@ -8,13 +8,7 @@ export class ParsingError extends Error {
   }
 }
 
-export class AccessControl<TStatements extends Statements> {
-  // public readonly statements: TStatements
-
-  // constructor(statements: TStatements) {
-  //     this.statements = statements
-  // }
-
+export class AccessControl<TStatements extends Statements = Statements> {
   public newRole<K extends keyof TStatements>(
     statements: Subset<K, TStatements>,
   ) {
@@ -22,7 +16,7 @@ export class AccessControl<TStatements extends Statements> {
   }
 }
 
-export type allowResponse =
+export type AuthortizeResponse =
   | { success: false; error: string }
   | { success: true; error?: never };
 
@@ -33,29 +27,49 @@ export class Role<TStatements extends Statements> {
     this.statements = statements;
   }
 
-  // public allow<TResource extends keyof TStatements>(req: { resource: TResource, actions: TStatements[TResource] }): allowResponse {
-  public allow<TResource extends keyof TStatements>(
-    resource: TResource,
-    actions: SubArray<TStatements[TResource]>,
-  ): allowResponse {
-    for (const [r, as] of Object.entries(this.statements)) {
-      if (resource === r) {
-        for (const action of (actions)) {
-          if (!as?.includes(action)) {
-            return {
-              success: false,
-              error:
-                `not authorized for action "${action}" on resource: "${r}"`,
-            };
-          }
-        }
-        return { success: true };
+  public authorize(
+    request: TStatements,
+  ): AuthortizeResponse {
+    for (
+      const [requestedResource, requestedActions] of Object.entries(request)
+    ) {
+      console.log(
+        JSON.stringify(
+          { requestedResource, requestedActions, statements: this.statements },
+          null,
+          2,
+        ),
+      );
+      const allowedActions = this.statements[requestedResource];
+      if (!allowedActions) {
+        return {
+          success: false,
+          error: `You are not allowed to access resource: ${requestedResource}`,
+        };
       }
+      console.log(JSON.stringify({ allowedActions }, null, 2));
+      const success = requestedActions.every((requestedAction) => {
+        console.log(JSON.stringify({ requestedAction }, null, 2));
+        for (const allowedAction of allowedActions) {
+          // if (allowedAction.rid && allowedAction.rid !== requestedAction.rid){
+          //   return false
+          // }
+          return allowedAction.action === requestedAction.action;
+        }
+        return false;
+      });
+      console.log({ success });
+      if (success) {
+        return { success };
+      }
+      return {
+        success: false,
+        error: `unauthorized to access resource "${requestedResource}"`,
+      };
     }
-
     return {
       success: false,
-      error: `not authorized for resource "${resource.toString()}"`,
+      error: `Not authorized`,
     };
   }
 

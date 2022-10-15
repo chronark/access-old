@@ -70,7 +70,7 @@ const recovered = Role.fromString<Statements>(serialized);
  *
  * everything is fully typed
  */
-const res = recovered.allow("team", ["read"]);
+const res = recovered.authorize({"team", ["read"]});
 
 // res.success => boolean
 // res.error => string | undefined provides a reason for failure
