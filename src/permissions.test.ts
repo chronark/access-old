@@ -31,7 +31,8 @@ describe("deserialization", () => {
   });
   describe("with resources", () => {
     it("serializes correctly", () => {
-      const role = Role.fromString('{"r1":["a","b"]}');
+      const role = Role.fromString<{ r1: ["a", "b", "c"] }>('{"r1":["a","b"]}');
+
       assert.deepEqual(role.statements, { r1: ["a", "b"] });
     });
   });

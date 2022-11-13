@@ -69,13 +69,13 @@ export class Role<TStatements extends Statements> {
     }
     return {
       success: false,
-      error: `Not authorized`,
+      error: "Not authorized",
     };
   }
 
   static fromString<TStatements extends Statements = Record<never, never>>(
     s: string,
-  ): Role<TStatements> {
+  ): Role<Subset<keyof TStatements,TStatements>> {
     const statements = JSON.parse(s) as TStatements;
 
     if (typeof statements !== "object") {
@@ -101,3 +101,5 @@ export class Role<TStatements extends Statements> {
     return JSON.stringify(this.statements);
   }
 }
+
+
