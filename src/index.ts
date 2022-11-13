@@ -1,2 +1,2 @@
 export * from "./permissions";
-export type { Statements } from "./types";
+export type { Statements, Subset } from "./types";
