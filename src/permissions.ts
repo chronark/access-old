@@ -12,7 +12,7 @@ export class AccessControl<TStatements extends Statements = Statements> {
   public newRole<K extends keyof TStatements>(
     statements: Subset<K, TStatements>,
   ) {
-    return new Role(statements);
+    return new Role<Subset<K, TStatements>>(statements);
   }
 }
 
@@ -27,12 +27,13 @@ export class Role<TStatements extends Statements> {
     this.statements = statements;
   }
 
-  public authorize(
-    request: TStatements,
+  public authorize<K extends keyof TStatements>(
+    request: Subset<K, TStatements>,
   ): AuthortizeResponse {
     for (
       const [requestedResource, requestedActions] of Object.entries(request)
     ) {
+
       console.log(
         JSON.stringify(
           { requestedResource, requestedActions, statements: this.statements },
@@ -47,8 +48,7 @@ export class Role<TStatements extends Statements> {
           error: `You are not allowed to access resource: ${requestedResource}`,
         };
       }
-      console.log(JSON.stringify({ allowedActions }, null, 2));
-      const success = requestedActions.every((requestedAction) => {
+      const success = (requestedActions as string[]).every((requestedAction: string) => {
         console.log(JSON.stringify({ requestedAction }, null, 2));
         for (const allowedAction of allowedActions) {
           // if (allowedAction.rid && allowedAction.rid !== requestedAction.rid){
@@ -73,9 +73,9 @@ export class Role<TStatements extends Statements> {
     };
   }
 
-  static fromString<TStatements extends Statements = Record<never, never>>(
+  static fromString<TStatements extends Statements>(
     s: string,
-  ): Role<Subset<keyof TStatements,TStatements>> {
+  ) {
     const statements = JSON.parse(s) as TStatements;
 
     if (typeof statements !== "object") {
@@ -94,7 +94,7 @@ export class Role<TStatements extends Statements> {
         }
       }
     }
-    return new Role(statements);
+    return new Role<TStatements>(statements);
   }
 
   public toString(): string {
@@ -103,3 +103,15 @@ export class Role<TStatements extends Statements> {
 }
 
 
+type S = {
+  "teams": ["read", "write"],
+  "users": ["read", "write"],
+}
+
+
+
+const ac = new AccessControl<S>()
+const role = ac.newRole({ users: ["read"], teams: ["read"] })
+const r = Role.fromString<S>(role.toString())
+
+r.authorize({ users: ["read", "write"] })

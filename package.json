@@ -1,6 +1,6 @@
 {
   "name": "@chronark/access",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,8 +17,5 @@
     "tsup": "^6.2.3",
     "tsx": "^3.10.1",
     "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "@chronark/access": "^0.0.11"
   }
 }
