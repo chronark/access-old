@@ -34,13 +34,7 @@ export class Role<TStatements extends Statements> {
       const [requestedResource, requestedActions] of Object.entries(request)
     ) {
 
-      console.log(
-        JSON.stringify(
-          { requestedResource, requestedActions, statements: this.statements },
-          null,
-          2,
-        ),
-      );
+     
       const allowedActions = this.statements[requestedResource];
       if (!allowedActions) {
         return {
@@ -49,7 +43,6 @@ export class Role<TStatements extends Statements> {
         };
       }
       const success = (requestedActions as string[]).every((requestedAction: string) => {
-        console.log(JSON.stringify({ requestedAction }, null, 2));
         for (const allowedAction of allowedActions) {
           // if (allowedAction.rid && allowedAction.rid !== requestedAction.rid){
           //   return false
@@ -58,7 +51,6 @@ export class Role<TStatements extends Statements> {
         }
         return false;
       });
-      console.log({ success });
       if (success) {
         return { success };
       }
