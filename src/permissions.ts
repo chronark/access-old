@@ -42,7 +42,7 @@ export class Role<TStatements extends Statements> {
           error: `You are not allowed to access resource: ${requestedResource}`,
         };
       }
-      const success = requestedActions.every((requestedAction) => allowedActions.includes(requestedAction))
+      const success = (requestedActions as string[]).every((requestedAction) => allowedActions.includes(requestedAction))
       if (success) {
         return { success };
       }
