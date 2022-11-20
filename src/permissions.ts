@@ -34,7 +34,7 @@ export class Role<TStatements extends Statements> {
       const [requestedResource, requestedActions] of Object.entries(request)
     ) {
 
-     
+
       const allowedActions = this.statements[requestedResource];
       if (!allowedActions) {
         return {
@@ -42,15 +42,7 @@ export class Role<TStatements extends Statements> {
           error: `You are not allowed to access resource: ${requestedResource}`,
         };
       }
-      const success = (requestedActions as string[]).every((requestedAction: string) => {
-        for (const allowedAction of allowedActions) {
-          // if (allowedAction.rid && allowedAction.rid !== requestedAction.rid){
-          //   return false
-          // }
-          return allowedAction === requestedAction;
-        }
-        return false;
-      });
+      const success = requestedActions.every((requestedAction) => allowedActions.includes(requestedAction))
       if (success) {
         return { success };
       }
