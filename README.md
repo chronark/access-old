@@ -33,7 +33,7 @@ import { AccessControl, Role } from "@chronark/access";
 type Statements = {
   user: ["read", "write", "dance"];
   team: ["read", "write"];
-;
+};
 
 /**
  * Create an access control instance and pass the Statements type to enjoy full
